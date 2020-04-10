@@ -1,0 +1,26 @@
+name: Create artifact
+
+on:
+  push:
+    branches: [ development ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.3'
+    - run: composer install
+    - run: git checkout -- .
+    - uses: actions/setup-node@v1
+    - run: npm install
+    - run: npm run build
+    - run: mkdir -p artifact/source
+    - run: mv public artifact/.
+    - run: mv source/_patterns artifact/source/.
+    - run: mkdir -p artifact/source/uswds
+    - run: mv node_modules/uswds/src/stylesheets/core artifact/source/uswds/.
+    - run: ls -la artifact
