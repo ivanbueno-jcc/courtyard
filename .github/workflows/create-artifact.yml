@@ -10,6 +10,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        repository: ivanbueno-jcc/courtyard-artifact
+        path: artifact
     - uses: shivammathur/setup-php@v2
       with:
         php-version: '7.3'
@@ -18,9 +22,9 @@ jobs:
     - uses: actions/setup-node@v1
     - run: npm install
     - run: npm run build
-    - run: mkdir -p artifact/source
-    - run: mv public artifact/.
-    - run: mv source/_patterns artifact/source/.
-    - run: mkdir -p artifact/source/uswds
-    - run: mv node_modules/uswds/src/stylesheets/core artifact/source/uswds/.
-    - run: ls -la artifact
+    - run: cp -R public/* artifact/public/.
+    - run: cp -R source/_patterns/* artifact/source/_patterns/.
+    - run: cp -R node_modules/uswds/src/stylesheets/core/* artifact/source/uswds/core/.
+    - run: ls -la .
+    - run: cd artifact
+    - run: git status
