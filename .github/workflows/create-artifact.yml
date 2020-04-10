@@ -26,5 +26,5 @@ jobs:
     - run: cp -R source/_patterns/* artifact/source/_patterns/.
     - run: cp -R node_modules/uswds/src/stylesheets/core/* artifact/source/uswds/core/.
     - run: ls -la .
-    - run: cd artifact
     - run: git status
+      working-directory: artifact
