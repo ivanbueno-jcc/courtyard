@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/checkout@v2
       with:
-        repository: ${{ target_repo }}
+        repository: ${{ matrix.target_repo }}
         path: artifact
     - uses: shivammathur/setup-php@v2
       with:
@@ -42,7 +42,7 @@ jobs:
         git config user.email "ivan.bueno@jud.ca.gov"
         git config user.name "Ivan Bueno"
         # Update origin with token
-        git remote set-url origin https://x-access-token:${TOKEN_API}@github.com/${{ target_repo }}.git
+        git remote set-url origin https://x-access-token:${TOKEN_API}@github.com/${{ matrix.target_repo }}.git
         # Checkout the branch so we can push back to it
         git checkout master
         git add .
