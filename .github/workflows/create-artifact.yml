@@ -33,12 +33,11 @@ jobs:
         TOKEN_API: ${{ secrets.TOKEN_API }}
         COMMIT_MSG: |
           Artifact generated from development
-          skip-checks: true
       run: |
         # Hard-code user configuration
         git config user.email "ivan.bueno@jud.ca.gov"
         git config user.name "Ivan Bueno"
         git add --all
         git commit -m "${COMMIT_MSG}"
-        git push https://ivanbueno-jcc:${TOKEN_API}@github.com/${{ matrix.target_repo }}.git
+        git push https://ivanbueno-jcc:${TOKEN_API}@github.com/${{ matrix.target_repo }}.git master
       working-directory: artifact
