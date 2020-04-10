@@ -28,9 +28,6 @@ jobs:
     - run: cp -R public/* artifact/public/.
     - run: cp -R source/_patterns/* artifact/source/_patterns/.
     - run: cp -R node_modules/uswds/src/stylesheets/core/* artifact/source/uswds/core/.
-    - run: ls -la .
-    - run: git status
-      working-directory: artifact
     - name: Commit to repository
       env:
         TOKEN_API: ${{ secrets.TOKEN_API }}
@@ -48,3 +45,4 @@ jobs:
         git add .
         # Only commit and push if we have changes
         git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin master)
+      working-directory: artifact
