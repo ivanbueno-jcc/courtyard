@@ -25,6 +25,7 @@ jobs:
       with:
         repository: ${{ matrix.target_repo }}
         path: artifact
+        token: ${{ secrets.TOKEN_API }}
     - run: cp -R public/* artifact/public/.
     - run: cp -R source/_patterns/* artifact/source/_patterns/.
     - run: cp -R node_modules/uswds/src/stylesheets/core/* artifact/source/uswds/core/.
@@ -39,5 +40,5 @@ jobs:
         git config user.name "Github Actions"
         git add --all
         git commit -m "${COMMIT_MSG}"
-        git push https://ivanbueno-jcc:${TOKEN_API}@github.com/${{ matrix.target_repo }}.git master
+        git push origin master
       working-directory: artifact
