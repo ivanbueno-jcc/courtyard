@@ -7,12 +7,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target_repo: [ "ivanbueno-jcc/courtyard-artifact" ]
 
     steps:
     - uses: actions/checkout@v2
     - uses: actions/checkout@v2
       with:
-        repository: ivanbueno-jcc/courtyard-artifact
+        repository: ${{ target_repo }}
         path: artifact
     - uses: shivammathur/setup-php@v2
       with:
@@ -28,3 +31,20 @@ jobs:
     - run: ls -la .
     - run: git status
       working-directory: artifact
+    - name: Commit to repository
+      env:
+        TOKEN_API: ${{ secrets.TOKEN_API }}
+        COMMIT_MSG: |
+          Artifact generated from development
+          skip-checks: true
+      run: |
+        # Hard-code user configuration
+        git config user.email "ivan.bueno@jud.ca.gov"
+        git config user.name "Ivan Bueno"
+        # Update origin with token
+        git remote set-url origin https://x-access-token:${TOKEN_API}@github.com/${{ target_repo }}.git
+        # Checkout the branch so we can push back to it
+        git checkout master
+        git add .
+        # Only commit and push if we have changes
+        git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin master)
