@@ -41,8 +41,8 @@ jobs:
         git add --all
         git commit -m "${COMMIT_MSG}"
         git push origin master
-        git fetch
-        VERSION=`git describe --abbrev=0 --tags`
+        git fetch origin --tags
+        VERSION=`git tag -l --sort=v:refname | tail -1`
         VERSION_BITS=(${VERSION//./ })
         VNUM1=${VERSION_BITS[0]}
         VNUM2=${VERSION_BITS[1]}
