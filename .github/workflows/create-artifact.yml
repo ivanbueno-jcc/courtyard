@@ -41,7 +41,7 @@ jobs:
         git add --all
         git commit -m "${COMMIT_MSG}"
         git push origin master
-        git fetch --tags
+        git fetch
         VERSION=`git describe --abbrev=0 --tags`
         VERSION_BITS=(${VERSION//./ })
         VNUM1=${VERSION_BITS[0]}
@@ -49,6 +49,6 @@ jobs:
         VNUM3=${VERSION_BITS[2]}
         VNUM3=$((VNUM3+1))
         NEW_TAG="$VNUM1.$VNUM2.$VNUM3"
-        git tag -a $NEW_TAG -m "Autocreating tag $NEW_TAG"
+        git tag -a $NEW_TAG -m "Autotag $NEW_TAG"
         git push --tags
       working-directory: artifact
