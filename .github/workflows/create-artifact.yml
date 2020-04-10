@@ -13,10 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/checkout@v2
-      with:
-        repository: ${{ matrix.target_repo }}
-        path: artifact
     - uses: shivammathur/setup-php@v2
       with:
         php-version: '7.3'
@@ -25,6 +21,10 @@ jobs:
     - uses: actions/setup-node@v1
     - run: npm install
     - run: npm run build
+    - uses: actions/checkout@v2
+      with:
+        repository: ${{ matrix.target_repo }}
+        path: artifact
     - run: cp -R public/* artifact/public/.
     - run: cp -R source/_patterns/* artifact/source/_patterns/.
     - run: cp -R node_modules/uswds/src/stylesheets/core/* artifact/source/uswds/core/.
